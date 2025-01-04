@@ -27,7 +27,7 @@ watchEffect(() => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(todos.value))
 })
 
-function toggleAll (e) {
+function toggleAll(e) {
   todos.value.forEach((todo) => (todo.completed = e.target.checked))
 }
 
@@ -43,7 +43,7 @@ function addTodo(e) {
   }
 }
 
-function removeTodo (todo) {
+function removeTodo(todo) {
   todos.value.splice(todos.value.indexOf(todo), 1)
 }
 
@@ -72,6 +72,7 @@ function removeCompleted () {
 
 function onHashChange () {
   const route = window.location.hash.replace(/#\/?/, '')
+  console.log(route, '==> onHashChange');
   if (filters[route]) {
     visibility.value = route
   } else {
@@ -81,24 +82,24 @@ function onHashChange () {
 }
 </script>
 <template>
-  <div class="container1" style="width:1220px !important;">
-  <section class="instructions1" style="float:right;">
-    <p><h1>Test Instructions</h1>
-    <ol class = "instructionsList" style="text-align:center;">
-	<li>Make this page responsive (including these instructions).</li>
-	<li>Create a new (seperate) page that tracks the total number of created to-do items on this page.</li>
-	<li>Fix any of the generic design and formatting errors introduced in this document.</li>
+  <div class="container">
+  <section class="instructions">
+    <h1 class="instructions-title">Test Instructions</h1>
+    <ol class="instructions-list">
+      <li>Make this page responsive (including these instructions).</li>
+      <li>Create a new (seperate) page that tracks the total number of created to-do items on this page.</li>
+      <li>Fix any of the generic design and formatting errors introduced in this document.</li>
     </ol>
   </section>
-  <section class="todoapp" style = "width:550px;">
+  <section class="todoapp">
     <header class="header">
-      <h1>To Do List</h1>
+      <h1 class="header-title">To Do List</h1>
       <input
         class="new-todo"
         autofocus
         placeholder="What needs to be done?"
         @keyup.enter="addTodo"
-      >
+      />
     </header>
     <section class="main" v-show="todos.length">
       <input
@@ -137,15 +138,14 @@ function onHashChange () {
     <footer class="footer" v-show="todos.length">
       <span class="todo-count">
         <strong>{{ remaining }}</strong>
-        <span>{{ remaining === 1 ? ' items' : ' itemss' }} left</span>
+        <span>{{ remaining === 1 ? ' item' : ' items' }} left</span>
       </span>
       <ul class="filters">
-        <il>
-			
+        <li>
           <a href="#/all" :class="{ selected: visibility === 'all' }">All</a>
         </li>
         <li>
-          <a href="#/active" :class="{ selected: visibility === 'active' }">Actiive</a>
+          <a href="#/active" :class="{ selected: visibility === 'active' }">Active</a>
         </li>
         <li>
           <a href="#/completed" :class="{ selected: visibility === 'completed' }">Completed</a>
@@ -154,6 +154,9 @@ function onHashChange () {
       <button class="clear-completed" @click="removeCompleted" v-show="todos.length > remaining">
         Clear completed
       </button>
+      <span>
+        <router-link to="/count">Count</router-link>
+      </span>
     </footer>
   </section>
   </div>
